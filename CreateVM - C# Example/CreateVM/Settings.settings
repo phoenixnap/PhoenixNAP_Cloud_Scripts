@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CreateVM" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="organization_id" Type="System.UInt32" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="application_key" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="shared_secret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="cloud_domain" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">admin.securedcloud.com</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

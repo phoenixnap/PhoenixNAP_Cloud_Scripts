@@ -8,6 +8,7 @@ function securedCloud_ConfigOptions() {
         "apiBaseURL" => array ("FriendlyName" => "API Base URL", "Type" => "text", "Size" => "80", "Description" => "Enter your reseller site URL here", "Default" => "https://admin.phoenixnap.com/cloud-external-api-rest", ),
         "applicationKey" => array ("FriendlyName" => "Application Key", "Type" => "text", "Size" => "40", "Description" => "", ),
         "sharedSecret" => array ("FriendlyName" => "Shared Secret", "Type" => "password", "Size" => "25", "Description" => "", ),
+	"pricingProfileId" => array ("FriendlyName" => "Default Pricing Profile ID", "Type" => "text", "Size" => "7", "Description" => "", ),
     );
     return $configarray;
 }
@@ -27,6 +28,9 @@ function securedCloud_CreateAccount($params) {
     $credentials = base64_encode($applicationKey . ":" . $hash);
     $clientDetails = $params['clientsdetails'];
     $customFields = $params["customfields"];
+    $pricingProfile = array (
+	"resourceURL"=>"/pricingprofile/" . $params['configoption5'];
+    );
     $clientDetailsArray = array(
     	"name"=>$clientDetails['companyname'],
    		"organizationType"=>"END_CLIENT",
@@ -38,9 +42,13 @@ function securedCloud_CreateAccount($params) {
    		"primaryContactName"=>$clientDetails['firstname'],
    		"primaryContactSurname"=>$clientDetails['lastname'],
    		"primaryContactEmail"=>$clientDetails['email'],
-   		"primaryContactPhoneNumber"=>$clientDetails['phonenumber']
+   		"primaryContactPhoneNumber"=>$clientDetails['phonenumber'],
+		"sendWelcomeEmail"=>false,
+		"assignedPricingProfileResource"=>$pricingProfile
       );
     $jsonClientDetails = json_encode($clientDetailsArray);
+    $clientDetailsPrint = implode(",", $clientDetailsArray);
+    syslog(LOG_WARNING, "CLIENT DETAILS: " . $clientDetailsPrint);
     
     $ch = curl_init();
     curl_setopt_array($ch, array(

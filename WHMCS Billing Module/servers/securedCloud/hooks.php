@@ -3,15 +3,15 @@
 $baseURL = "https://yourcloudadminurl/cloud-external-api-rest";
 $applicationKey = "";
 $sharedSecret = "";
+$adminUser = "";
 
 function hook_Get_Daily_Usage($vars) {
-    global $applicationKey, $sharedSecret, $baseURL;
+    global $applicationKey, $sharedSecret, $baseURL, $adminUser;
     $apiCommand = "getproducts";
     $apiValues = array(
         # ENTER YOUR PRODUCT GROUP ID FOR CLOUD SERVICES HERE
         'gid' => '1'
     );
-    $adminUser = 'williamb';
     $results = localAPI($apiCommand,$apiValues,$adminUser);
     #if ($results['result']!="success") {
     #    syslog(LOG_WARNING, "An Error Occurred: ".$results['result']);
@@ -77,10 +77,9 @@ function hook_Get_Daily_Usage($vars) {
 }
 
 function hook_Reset_Usage_On_Invoice($vars) {
-    global $applicationKey, $sharedSecret, $baseURL;
+    global $applicationKey, $sharedSecret, $baseURL, $adminUser;
     $invoiceId = $vars['invoiceid'];
     syslog(LOG_WARNING, "INVOICECREATEADMINAREA  Invoice ID: ". $invoiceId);
-    $adminUser = 'williamb';
     $getInvoiceApiCommand = "getinvoice";
     $getInvoiceApiValues = array(
         'invoiceid' => $invoiceId
@@ -124,9 +123,8 @@ function hook_Reset_Usage_On_Invoice($vars) {
 }
 
 function hook_Suspend_Cloud_Account($vars) {
-    global $applicationKey, $sharedSecret, $baseURL;
+    global $applicationKey, $sharedSecret, $baseURL, $adminUser;
     $serviceId = $vars['serviceid'];
-    $adminUser = "williamb";
     $getClientIdFromServiceIdApiCommand = "getclientsproducts";
     $getClientIdFromServiceIdApiValues = array(
 	'serviceid' => $serviceId

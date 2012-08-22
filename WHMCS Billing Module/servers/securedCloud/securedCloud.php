@@ -29,7 +29,7 @@ function securedCloud_CreateAccount($params) {
     $clientDetails = $params['clientsdetails'];
     $customFields = $params["customfields"];
     $pricingProfile = array (
-	"resourceURL"=>"/pricingprofile/" . $params['configoption5'];
+	"resourceURL"=>"/pricingprofile/" . $params['configoption5']
     );
     $clientDetailsArray = array(
     	"name"=>$clientDetails['companyname'],
@@ -47,13 +47,9 @@ function securedCloud_CreateAccount($params) {
 		"assignedPricingProfileResource"=>$pricingProfile
       );
     $jsonClientDetails = json_encode($clientDetailsArray);
-    $clientDetailsPrint = implode(",", $clientDetailsArray);
-    syslog(LOG_WARNING, "CLIENT DETAILS: " . $clientDetailsPrint);
     
     $ch = curl_init();
     curl_setopt_array($ch, array(
-    	CURLINFO_HEADER_OUT => 1,
-	CURLOPT_HEADER => 1,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST => 1,
         CURLOPT_POSTFIELDS => $jsonClientDetails,
